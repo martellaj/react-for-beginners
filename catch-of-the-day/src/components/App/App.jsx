@@ -17,6 +17,7 @@ export default class App extends React.Component {
 
         // Bind component to custom component functions.
         this.addFish = this.addFish.bind(this);
+        this.addToOrder = this.addToOrder.bind(this);
         this.loadSamples = this.loadSamples.bind(this);
     }
 
@@ -30,6 +31,12 @@ export default class App extends React.Component {
 
         // Set state.
         this.setState({ fishes: fishes });
+    }
+
+    addToOrder(key) {
+        let order = {...this.state.order};
+        order[key] = order[key] + 1 || 1;
+        this.setState({ order: order });
     }
 
     loadSamples() {
@@ -47,7 +54,7 @@ export default class App extends React.Component {
                         {
                             Object
                                 .keys(this.state.fishes)
-                                .map(key => <Fish key={key} details={this.state.fishes[key]} />)
+                                .map(key => <Fish key={key} fishId={key} addToOrder={this.addToOrder} details={this.state.fishes[key]} />)
                         }
                     </ul>
                 </div>
