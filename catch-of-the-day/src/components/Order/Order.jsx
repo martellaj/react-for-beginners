@@ -12,7 +12,9 @@ export default class Order extends React.Component {
         let fish = this.props.fishes[key];
         let count = this.props.order[key];
 
-        if (!fish || fish.status === 'unavailable') {
+        if (Object.keys(this.props.fishes).length === 0) {
+            // Fish data hasn't been received from the database.
+        } else if (!fish || fish.status === 'unavailable') {
             return <li key={key}>Sorry, {fish ? fish.name : 'fish'} is no longer available!</li>
         } else {
             return (

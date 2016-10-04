@@ -22,17 +22,31 @@ export default class App extends React.Component {
         this.loadSamples = this.loadSamples.bind(this);
     }
 
-    // Syncs current store before it's rendered to the DOM.
     componentWillMount() {
+        this.ORDER_KEY = `order.${this.props.params.storeId}`;
+
+        // Syncs current store before it's rendered to the DOM.
         this.ref = base.syncState(`${this.props.params.storeId}/fishes`, {
             context: this,
             state: 'fishes'
         });
+
+        // Get order state from local storage.
+        let orderState = localStorage.getItem(this.ORDER_KEY);
+        if (orderState) {
+            this.setState({
+                order: JSON.parse(orderState)
+            });
+        }
     }
 
     // Remove connection to current store before navigating away.
     componentWillUnmount() {
         base.removeBinding(this.ref);
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        localStorage.setItem(this.ORDER_KEY, JSON.stringify(nextState.order));
     }
 
     addFish(fish) {
