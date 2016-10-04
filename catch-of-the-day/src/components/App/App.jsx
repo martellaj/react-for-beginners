@@ -1,15 +1,16 @@
 import Header from '../Header/Header';
 import Inventory from '../Inventory/Inventory';
 import Order from '../Order/Order';
+import base from '../../base';
+import Fish from '../Fish/Fish';
 import React from 'react';
 import sampleFishes from '../../sample-fishes';
-import Fish from '../Fish/Fish';
 
 export default class App extends React.Component {
     constructor() {
         super();
 
-        // Set initial state.
+        // Get initial state.
         this.state = {
             fishes: {},
             order: {}
@@ -19,6 +20,19 @@ export default class App extends React.Component {
         this.addFish = this.addFish.bind(this);
         this.addToOrder = this.addToOrder.bind(this);
         this.loadSamples = this.loadSamples.bind(this);
+    }
+
+    // Syncs current store before it's rendered to the DOM.
+    componentWillMount() {
+        this.ref = base.syncState(`${this.props.params.storeId}/fishes`, {
+            context: this,
+            state: 'fishes'
+        });
+    }
+
+    // Remove connection to current store before navigating away.
+    componentWillUnmount() {
+        base.removeBinding(this.ref);
     }
 
     addFish(fish) {
