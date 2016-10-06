@@ -20,6 +20,7 @@ export default class App extends React.Component {
         this.addFish = this.addFish.bind(this);
         this.addToOrder = this.addToOrder.bind(this);
         this.loadSamples = this.loadSamples.bind(this);
+        this.updateFish = this.updateFish.bind(this);
     }
 
     componentWillMount() {
@@ -61,6 +62,12 @@ export default class App extends React.Component {
         this.setState({ fishes: fishes });
     }
 
+    updateFish(key, updatedFish) {
+        let fishes = {...this.state.fishes};
+        fishes[key] = updatedFish;
+        this.setState({ fishes: fishes });
+    }
+
     addToOrder(key) {
         let order = {...this.state.order};
         order[key] = order[key] + 1 || 1;
@@ -87,7 +94,7 @@ export default class App extends React.Component {
                     </ul>
                 </div>
                 <Order fishes={this.state.fishes} order={this.state.order} />
-                <Inventory addFish={this.addFish} loadSamples={this.loadSamples} />
+                <Inventory addFish={this.addFish} fishes={this.state.fishes} loadSamples={this.loadSamples} updateFish={this.updateFish} />
             </div>
         );
     }
