@@ -11,15 +11,16 @@ export default class Order extends React.Component {
     renderOrder(key) {
         let fish = this.props.fishes[key];
         let count = this.props.order[key];
+        let removeFromOrderButton = <button onClick={() => this.props.removeFromOrder(key)}>&times;</button>;
 
         if (Object.keys(this.props.fishes).length === 0) {
             // Fish data hasn't been received from the database.
         } else if (!fish || fish.status === 'unavailable') {
-            return <li key={key}>Sorry, {fish ? fish.name : 'fish'} is no longer available!</li>
+            return <li key={key}>Sorry, {fish ? fish.name : 'fish'} is no longer available! {removeFromOrderButton}</li>
         } else {
             return (
                 <li key={key}>
-                    <span>{count}lb{count > 1 ? 's': ''} {fish.name}</span>
+                    <span>{count}lb{count > 1 ? 's': ''} {fish.name} {removeFromOrderButton}</span>
                     <span className="price">{formatPrice(fish.price * count)}</span>
                 </li>
             );
