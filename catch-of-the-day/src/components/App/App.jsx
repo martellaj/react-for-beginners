@@ -103,12 +103,30 @@ export default class App extends React.Component {
                         {
                             Object
                                 .keys(this.state.fishes)
-                                .map(key => <Fish key={key} fishId={key} addToOrder={this.addToOrder} details={this.state.fishes[key]} />)
+                                .map(key =>
+                                    <Fish
+                                        addToOrder={this.addToOrder}
+                                        details={this.state.fishes[key]}
+                                        fishId={key}
+                                        key={key}
+                                    />
+                                )
                         }
                     </ul>
                 </div>
-                <Order fishes={this.state.fishes} order={this.state.order} removeFromOrder={this.removeFromOrder} />
-                <Inventory addFish={this.addFish} removeFish={this.removeFish} fishes={this.state.fishes} loadSamples={this.loadSamples} updateFish={this.updateFish} />
+                <Order
+                    fishes={this.state.fishes}
+                    order={this.state.order}
+                    removeFromOrder={this.removeFromOrder}
+                />
+                <Inventory
+                    addFish={this.addFish}
+                    fishes={this.state.fishes}
+                    loadSamples={this.loadSamples}
+                    removeFish={this.removeFish}
+                    storeId={this.props.params.storeId}
+                    updateFish={this.updateFish}
+                />
             </div>
         );
     }
