@@ -5,10 +5,12 @@
   padding: 2rem;
   border: 2px solid #000;
 }
+
 .store-selector input,
 .store-selector button {
   width: 100%;
 }
+
 .store-selector input[type="text"],
 .store-selector button[type="text"] {
   text-align: center;

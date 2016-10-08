@@ -1,8 +1,8 @@
+import base from '../../base';
+import Fish from '../Fish/Fish';
 import Header from '../Header/Header';
 import Inventory from '../Inventory/Inventory';
 import Order from '../Order/Order';
-import base from '../../base';
-import Fish from '../Fish/Fish';
 import React from 'react';
 import sampleFishes from '../../sample-fishes';
 
@@ -64,6 +64,18 @@ export default class App extends React.Component {
         this.setState({ fishes: fishes });
     }
 
+    addToOrder(key) {
+        let order = {...this.state.order};
+        order[key] = order[key] + 1 || 1;
+        this.setState({ order: order });
+    }
+
+    loadSamples() {
+        this.setState({
+            fishes: sampleFishes
+        });
+    }
+
     updateFish(key, updatedFish) {
         let fishes = {...this.state.fishes};
         fishes[key] = updatedFish;
@@ -76,22 +88,10 @@ export default class App extends React.Component {
         this.setState({ fishes });
     }
 
-    addToOrder(key) {
-        let order = {...this.state.order};
-        order[key] = order[key] + 1 || 1;
-        this.setState({ order: order });
-    }
-
     removeFromOrder(key) {
         let order = {...this.state.order};
         delete order[key];
         this.setState({ order });
-    }
-
-    loadSamples() {
-        this.setState({
-            fishes: sampleFishes
-        });
     }
 
     render() {

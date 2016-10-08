@@ -15,8 +15,8 @@ export default class Inventory extends React.Component {
         this.authenticate = this.authenticate.bind(this);
         this.authHandler = this.authHandler.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.renderInventory = this.renderInventory.bind(this);
         this.logOut = this.logOut.bind(this);
+        this.renderInventory = this.renderInventory.bind(this);
     }
 
     componentDidMount() {
@@ -27,31 +27,11 @@ export default class Inventory extends React.Component {
         });
     }
 
-    handleChange(e, key) {
-        let fish = this.props.fishes[key];
-        let updatedFish = {
-            ...fish,
-            [e.target.name]: e.target.value
-        };
-
-        this.props.updateFish(key, updatedFish);
-    }
-
     authenticate(provider) {
         base.authWithOAuthPopup(provider, this.authHandler);
     }
 
-    logOut() {
-        base.unauth();
-
-        this.setState({
-            uid: null
-        });
-    }
-
     authHandler(err, authData) {
-        console.log(authData);
-
         if (err) {
             // Handle error.
             console.error(err);
@@ -76,14 +56,22 @@ export default class Inventory extends React.Component {
         });
     }
 
-    renderLogin() {
-        return (
-            <nav className="login">
-                <h2>Inventory</h2>
-                <p>Sign in to manage your store's inventory</p>
-                <button className="facebook" onClick={() => this.authenticate('facebook')}>Log in with Facebook</button>
-            </nav>
-        );
+    handleChange(e, key) {
+        let fish = this.props.fishes[key];
+        let updatedFish = {
+            ...fish,
+            [e.target.name]: e.target.value
+        };
+
+        this.props.updateFish(key, updatedFish);
+    }
+
+    logOut() {
+        base.unauth();
+
+        this.setState({
+            uid: null
+        });
     }
 
     renderInventory(key) {
@@ -101,6 +89,16 @@ export default class Inventory extends React.Component {
                 <input type="text" name="image" value={fish.image} placeholder="Fish image" onChange={(e) => { this.handleChange(e, key); }} />
                 <button onClick={() => this.props.removeFish(key)}>Remove fish</button>
             </div>
+        );
+    }
+
+    renderLogin() {
+        return (
+            <nav className="login">
+                <h2>Inventory</h2>
+                <p>Sign in to manage your store's inventory</p>
+                <button className="facebook" onClick={() => this.authenticate('facebook')}>Log in with Facebook</button>
+            </nav>
         );
     }
 

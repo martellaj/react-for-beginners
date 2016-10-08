@@ -1,6 +1,6 @@
 import { formatPrice } from '../../helpers';
-import React from 'react';
 import CSSTransitionGroup from 'react-addons-css-transition-group';
+import React from 'react';
 
 export default class Order extends React.Component {
     constructor() {
